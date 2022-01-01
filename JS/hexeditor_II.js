@@ -1,11 +1,13 @@
 
 
 var __file__ = new ByteStream(byteresult, textresult, loadstatus)
- 
+// var __fn__ = '' //
+
 input:onclick = function(e){
   var __status__ = {
     "btnDump" : function(){
-        __file__.openDumpStream(btnStream.files[0])
+        __file__.openDumpStream(btnStream.files[0] || __fn__)
+        //__fn__ = btnStream.files[0] || __fn__ //
         },
     "btnSave" : function(){
         __file__.saveDumpStream(btnSaveStream.files[0])
@@ -38,3 +40,11 @@ textresult.addEventListener("scroll",
 btnSave:click = function(w){
   alert(this.files[0].name)
 }
+
+btnStream.addEventListener('change',() => { 
+__file__.openDumpStream(btnStream.files[0]) 
+}, false)
+/*
+btnStream.onmessage = function(e){
+    console.log( e.toString )
+}*/
