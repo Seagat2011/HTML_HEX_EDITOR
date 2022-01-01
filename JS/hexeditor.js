@@ -31,25 +31,26 @@
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   TITLE
-    HEXEDITOR + UNASSEMLBER 
-  
+    HEXEDITOR + UNASSEMLBER
+
   DESCRIPTION
     View Edit Save files in raw format
     Chrome v96+ requires `python -m http.server 8356 --bind 127.0.10.1` (CORS requirement)
-    
+    Proper unassembly requires the file be in the current directory
+
   AUTHOR
     Seagat2011
-  
+
   INPUT
     bytestream
-    
-      61 64 64 45 76 65 6e 74 4c 69 73 74 65 6e 65 72 28 22 6d 65 73 73 61 67 65 
-      22 2c 6d 79 46 75 6e 63 2c 22 31 36 4b 5f 63 6f 64 65 63 2e 68 74 6d 22 29 
+
+      61 64 64 45 76 65 6e 74 4c 69 73 74 65 6e 65 72 28 22 6d 65 73 73 61 67 65
+      22 2c 6d 79 46 75 6e 63 2c 22 31 36 4b 5f 63 6f 64 65 63 2e 68 74 6d 22 29
       0a 0a 66 75 6e 63 74 69 6f 6e 20 6d 79 46 75 6e 63 28 65 29 7b 0a 0a 7d
-    
+
   OUTPUT
     Hexadecimal + filtered text + Assembler
-    
+
   VERSION
     Major.Minor.Bugfix.Patch
     1.0.0.0
@@ -67,6 +68,7 @@ var charSet = {}
 Object.prototype.toHex = function(){
   return this < 16 ? '0'+this.toString( 16 ) : this.toString( 16 )
 }
+
 XMLHttpRequest.prototype._num2bytes = function(sData) {
   return(new Uint8Array(sData.length).map(
     function(w,nIdx){
@@ -74,6 +76,7 @@ XMLHttpRequest.prototype._num2bytes = function(sData) {
     })
   )
 }
+
 XMLHttpRequest.prototype._ch2bytes = function(sData) {
   /* send as ArrayBufferView...: */
   // this.send(ui8Data)
@@ -85,6 +88,7 @@ XMLHttpRequest.prototype._ch2bytes = function(sData) {
     })
   )
 }
+
 function ByteStream(code_editor,txt_editor,lstatus){
   var self = this
   this.url = ""
@@ -150,7 +154,9 @@ function ByteStream(code_editor,txt_editor,lstatus){
   }
   setInterval(this.callback,1)
 }
+
 ByteStream.prototype = {}
+
 ByteStream.prototype.__byteStream__ = function (putget){
   var self = this
   var xhr = new XMLHttpRequest()
