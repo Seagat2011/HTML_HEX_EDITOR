@@ -1,0 +1,33 @@
+<html xmlns="http://www.w3.org/1999/xhtml" hasBrowserHandlers="true">
+<head>
+<title>Hex Editor + Unassembler v1.0.0.0</title>
+<meta charset="utf-8">
+
+<link href=CSS/hexeditor.css rel="stylesheet">
+
+<script src=JS/hexeditor.js></script>
+
+</head>
+<br>
+<input id=btnStream type=file /><br>
+<br>
+<div>
+<input id=btnDump type=button value="Dump file" />  <input id=btnClear type=button value="clear source window"/> 
+<div id=loadstatus style="float : right"> Ready</div>
+</div>
+<br>
+<div>
+<div id=frm00></div>
+<textarea id=byteresult name=area00></textarea>
+<textarea id=textresult name=area01 style="width : 24%;"></textarea>
+</div>
+<input id=btnSave type=button value=" Save " /><input id=btnSaveStream type=file />
+<input id=code00 type="radio" checked=TRUE onclick="code01.checked=code02.checked=false"/> <label>byte code</label> | 
+<input id=code01 type="radio" onclick="code00.checked=code02.checked=false"/> <label>text</label> |
+<input id=code02 type="radio" onclick="code00.checked=code01.checked=false"/> <label>text + byte code</label>
+<footer>
+
+<script src=JS/hexeditor_II.js></script>
+
+</footer>
+</html>
