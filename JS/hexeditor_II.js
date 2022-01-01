@@ -44,6 +44,7 @@ btnSave:click = function(w){
 btnStream.addEventListener('change',() => { 
 __file__.openDumpStream(btnStream.files[0]) 
 }, false)
+
 /*
 btnStream.onmessage = function(e){
     console.log( e.toString )
