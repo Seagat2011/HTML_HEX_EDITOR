@@ -157,6 +157,7 @@ ByteStream.prototype.__byteStream__ = function (putget){
   var url = this.url
   var async = true
   if(putget === "GET"){
+    xhr.overrideMimeType("application/octet-stream");
     xhr.open(putget,url,async)
     xhr.responseType = "arraybuffer"
     xhr.onreadystatechange = function(e){
