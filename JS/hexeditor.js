@@ -210,7 +210,7 @@ ByteStream.prototype.__byteStream__ = function (putget){
           self.textScroll_pixelTop = 0
           self.proceed = true
           return "Ready"  // 4 DONE
-          },              
+          },
       ]
       self.status_window.innerHTML = banner [ xhr.readyState ] (putget) || Error("Error parsing bitstream - Please try again.")
     }
