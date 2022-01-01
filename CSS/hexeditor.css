@@ -1,0 +1,15 @@
+
+textarea {
+  width : 73%; 
+  height : 80%; 
+  overflow : auto;
+  font-style : monospace;
+  font-family : monospace;
+  font-size : 10pt;
+  font-color : #808080;
+  color: /*cadetblue*/ #808080;
+  outline: none;
+}
+form {
+  display : inline;
+}
