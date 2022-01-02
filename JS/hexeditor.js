@@ -59,7 +59,7 @@
 
 var charSet = {}
 
-"1234567890`~!@#$%^&*()-_=+\\;:'\"|,<.>/?{}[]abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\t\n "
+"1234567890`~!@#$%^&*()-_=+\\;:'\"|,<.>/?{}[]abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\t\n\a\r "
 .split("")
 .map(function(w){
   charSet[w.charCodeAt()] = w
@@ -111,14 +111,14 @@ function ByteStream(code_editor,txt_editor,lstatus){
         try{
           if(self.byteScroll_pixelTop+self.byteScrollTop<self.codeStream.length){
             var stride = self.byteScroll_pixelTop+self.byteScrollTop
-            self.code_editor.value += self.codeStream.slice(self.byteScroll_pixelTop,stride).join(" ")
-            self.byteScroll_pixelTop += self.byteScrollTop          
+            self.code_editor.value += self.codeStream.slice(self.byteScroll_pixelTop,stride).join(" ") + " "
+            self.byteScroll_pixelTop += self.byteScrollTop
           }
           else
           if((self.byteScroll_pixelTop+self.byteScrollTop>=self.codeStream.length) && 
             (self.byteScroll_pixelTop<self.codeStream.length)){
             var stride = self.codeStream.length
-            self.code_editor.value += self.codeStream.slice(self.byteScroll_pixelTop,stride).join(" ")
+            self.code_editor.value += self.codeStream.slice(self.byteScroll_pixelTop,stride).join(" ") + " "
             self.byteScroll_pixelTop += self.byteScrollTop
           }
         }
@@ -201,9 +201,9 @@ ByteStream.prototype.__byteStream__ = function (putget){
           self.textStream = new Array()
           self.byteStream.map(
             function(w,i){
-              var v = w.toHex()
+              var v = w.toHex() // Sanitize input safely //
               self.codeStream[i] = v
-              self.textStream[i] = charSet[w] || null
+              self.textStream[i] = charSet[w] || `[0x${ v }]`
               return w
             })
           self.byteScroll_pixelTop = 0
