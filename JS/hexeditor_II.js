@@ -62,6 +62,8 @@ divCode00.onclick = function(e){
     code01.checked=code02.checked=false
     byteresult.style.display=
     textresult.style.display='inline'
+    byteresult.style.width = 
+    textresult.style.width = '49%'
 }
 
 divCode01.onclick = function(e){
@@ -69,6 +71,7 @@ divCode01.onclick = function(e){
     code00.checked=code02.checked=false
     byteresult.style.display='none'
     textresult.style.display='inline'
+    textresult.style.width = '100%'
 }
 
 divCode02.onclick = function(e){
@@ -76,4 +79,5 @@ divCode02.onclick = function(e){
     code00.checked=code01.checked=false
     byteresult.style.display='inline'
     textresult.style.display='none'
+    byteresult.style.width = '100%'
 }
