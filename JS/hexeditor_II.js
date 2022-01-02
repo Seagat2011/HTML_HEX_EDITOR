@@ -53,5 +53,4 @@ btnStream.onmessage = function(e){
 textresult.ondrop = 
 byteresult.ondrop = function(e){
     __file__.openDumpStream( e.dataTransfer.files[0] )
-    console.log(e)
 }
