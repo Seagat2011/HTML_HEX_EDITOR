@@ -3,7 +3,9 @@
 var __file__ = new ByteStream(byteresult, textresult, loadstatus)
 // var __fn__ = '' //
 
-input:onclick = function(e){
+btnDump.onclick = 
+btnSave.onclick =
+btnClear.onclick = function(e){
   var __status__ = {
     "btnDump" : function(){
         __file__.openDumpStream(btnStream.files[0] || __fn__)
@@ -53,4 +55,25 @@ btnStream.onmessage = function(e){
 textresult.ondrop = 
 byteresult.ondrop = function(e){
     __file__.openDumpStream( e.dataTransfer.files[0] )
+}
+
+divCode00.onclick = function(e){
+    code00.checked=true
+    code01.checked=code02.checked=false
+    byteresult.style.display=
+    textresult.style.display='inline'
+}
+
+divCode01.onclick = function(e){
+    code01.checked=true
+    code00.checked=code02.checked=false
+    byteresult.style.display='none'
+    textresult.style.display='inline'
+}
+
+divCode02.onclick = function(e){
+    code02.checked=true
+    code00.checked=code01.checked=false
+    byteresult.style.display='inline'
+    textresult.style.display='none'
 }
