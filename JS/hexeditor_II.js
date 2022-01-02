@@ -25,17 +25,26 @@ btnClear.onclick = function(e){
   }
 }
 
+var scrollLock = false
 byteresult.addEventListener("scroll", 
   function(e){
-    if(e.target.id == 'byteresult'){
-      textresult.scrollTop = e.target.scrollTop
+    if(e.target.id == 'byteresult' && !scrollLock){
+        let scrollRatio = e.target.scrollTop / byteresult.scrollHeight ;
+        textresult.scrollTop = textresult.scrollHeight * scrollRatio
+        scrollLock = true
+    } else {
+        scrollLock = false
     }
   })
 
 textresult.addEventListener("scroll", 
   function(e){
-    if(e.target.id == 'textresult'){
-      byteresult.scrollTop = e.target.scrollTop
+    if(e.target.id == 'textresult' && !scrollLock){
+        let scrollRatio = e.target.scrollTop / textresult.scrollHeight ;
+        byteresult.scrollTop = byteresult.scrollHeight * scrollRatio
+        scrollLock = true
+    } else {
+        scrollLock = false
     }
   })
 
