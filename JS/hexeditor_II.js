@@ -44,7 +44,7 @@ btnSave:click = function(w){
 }
 
 btnStream.addEventListener('change',() => { 
-__file__.openDumpStream(btnStream.files[0]) 
+    __file__.openDumpStream(btnStream.files[0]) 
 }, false)
 
 /*
