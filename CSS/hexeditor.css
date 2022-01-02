@@ -11,6 +11,10 @@ textarea {
   outline: none;
   display: inline;
 }
+
+.fullview {
+  width : 100%; 
+}
 /*
 form {
   display : inline;
