@@ -49,3 +49,9 @@ __file__.openDumpStream(btnStream.files[0])
 btnStream.onmessage = function(e){
     console.log( e.toString )
 }*/
+
+textresult.ondrop = 
+byteresult.ondrop = function(e){
+    __file__.openDumpStream( e.dataTransfer.files[0] )
+    console.log(e)
+}
