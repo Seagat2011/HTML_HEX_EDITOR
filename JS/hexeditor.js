@@ -1,22 +1,3 @@
-<html xmlns="http://www.w3.org/1999/xhtml" hasBrowserHandlers="true">
-<head>
-<title>Hex editor engine 1.0.0.0</title>
-<meta charset="utf-8">
-<style>
-textarea {
-  width : 73%; 
-  height : 83%; 
-  overflow : auto;
-  font-style : monospace;
-  font-size : 10pt;
-  font-color : #808080;
-}
-form {
-  display : inline;
-}
-</style>
-<script>
-
 /* 
 
   Copyright (c) 2022, Seagat2011
@@ -50,24 +31,26 @@ form {
   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   TITLE
-    HEXEDITOR + UNASSEMLBER 
-  
+    HEXEDITOR + UNASSEMLBER
+
   DESCRIPTION
     View Edit Save files in raw format
-    
+    Chrome v96+ requires `python -m http.server 8356 --bind 127.0.10.1` (CORS requirement)
+    Proper unassembly requires the file be in the current directory
+
   AUTHOR
     Seagat2011
-  
+
   INPUT
     bytestream
-    
-      61 64 64 45 76 65 6e 74 4c 69 73 74 65 6e 65 72 28 22 6d 65 73 73 61 67 65 
-      22 2c 6d 79 46 75 6e 63 2c 22 31 36 4b 5f 63 6f 64 65 63 2e 68 74 6d 22 29 
+
+      61 64 64 45 76 65 6e 74 4c 69 73 74 65 6e 65 72 28 22 6d 65 73 73 61 67 65
+      22 2c 6d 79 46 75 6e 63 2c 22 31 36 4b 5f 63 6f 64 65 63 2e 68 74 6d 22 29
       0a 0a 66 75 6e 63 74 69 6f 6e 20 6d 79 46 75 6e 63 28 65 29 7b 0a 0a 7d
-    
+
   OUTPUT
     Hexadecimal + filtered text + Assembler
-    
+
   VERSION
     Major.Minor.Bugfix.Patch
     1.0.0.0
@@ -85,6 +68,7 @@ var charSet = {}
 Object.prototype.toHex = function(){
   return this < 16 ? '0'+this.toString( 16 ) : this.toString( 16 )
 }
+
 XMLHttpRequest.prototype._num2bytes = function(sData) {
   return(new Uint8Array(sData.length).map(
     function(w,nIdx){
@@ -92,6 +76,7 @@ XMLHttpRequest.prototype._num2bytes = function(sData) {
     })
   )
 }
+
 XMLHttpRequest.prototype._ch2bytes = function(sData) {
   /* send as ArrayBufferView...: */
   // this.send(ui8Data)
@@ -103,6 +88,7 @@ XMLHttpRequest.prototype._ch2bytes = function(sData) {
     })
   )
 }
+
 function ByteStream(code_editor,txt_editor,lstatus){
   var self = this
   this.url = ""
@@ -167,14 +153,18 @@ function ByteStream(code_editor,txt_editor,lstatus){
     }
   }
   setInterval(this.callback,1)
-}ByteStream.prototype = {}
+}
+
+ByteStream.prototype = {}
 
 ByteStream.prototype.__byteStream__ = function (putget){
   var self = this
   var xhr = new XMLHttpRequest()
+  var url = this.url
   var async = true
   if(putget === "GET"){
-    xhr.open(putget,this.url,async)
+    xhr.overrideMimeType("application/octet-stream");
+    xhr.open(putget,url,async)
     xhr.responseType = "arraybuffer"
     xhr.onreadystatechange = function(e){
       var banner = [
@@ -220,7 +210,7 @@ ByteStream.prototype.__byteStream__ = function (putget){
           self.textScroll_pixelTop = 0
           self.proceed = true
           return "Ready"  // 4 DONE
-          },              
+          },
       ]
       self.status_window.innerHTML = banner [ xhr.readyState ] (putget) || Error("Error parsing bitstream - Please try again.")
     }
@@ -228,7 +218,7 @@ ByteStream.prototype.__byteStream__ = function (putget){
   }
   else
   if(putget === "POST"){
-    xhr.open(putget,"hexeditor.py",async)
+    xhr.open(putget,url,async)
     if(code00.checked){
       xhr.send(xhr._num2bytes(self.code_editor.value.split(/\s+/g)))
     }
@@ -272,68 +262,3 @@ ByteStream.prototype.saveDumpStream = function (w){
     console.log(e)
   }
 }
-
-</script>
-</head>
-<br>
-<input id=btnStream type=file /><br>
-<br>
-<div>
-<input id=btnDump type=button value="Dump file" />  <input id=btnClear type=button value="clear source window"/> 
-<div id=loadstatus style="float : right"> Ready</div>
-</div>
-<br>
-<div>
-<form id=frm00 action=hexeditor.py method=post><textarea id=byteresult name=area00></textarea></form>
-<form id=frm01 action=hexeditor.py method=post><textarea id=textresult name=area01 style="width : 24%;"></textarea></form>
-</div>
-<input id=btnSave type=button value=" Save " /><input id=btnSaveStream type=file />
-<input id=code00 type="radio" checked=TRUE onclick="code01.checked=code02.checked=false"/> <label>byte code</label> | 
-<input id=code01 type="radio" onclick="code00.checked=code02.checked=false"/> <label>text-only</label> |
-<input id=code02 type="radio" onclick="code00.checked=code01.checked=false"/> <label>text as byte code</label>
-<footer>
-
-<script>
-
-var __file__ = new ByteStream(byteresult, textresult, loadstatus)
- 
-input:onclick = function(e){
-  var __status__ = {
-    "btnDump" : function(){
-        __file__.openDumpStream(btnStream.files[0])
-        },
-    "btnSave" : function(){
-        __file__.saveDumpStream(btnSaveStream.files[0])
-        },
-    "btnClear" : function(){
-        __file__.proceed = false
-        byteresult.value = ''
-        textresult.value = ''
-        },
-  }
-  if(__status__[e.target.id]){
-    __status__[e.target.id]()
-  }
-}
-
-byteresult.addEventListener("scroll", 
-  function(e){
-    if(e.target.id == 'byteresult'){
-      textresult.scrollTop = e.target.scrollTop
-    }
-  })
-
-textresult.addEventListener("scroll", 
-  function(e){
-    if(e.target.id == 'textresult'){
-      byteresult.scrollTop = e.target.scrollTop
-    }
-  })
-
-btnSave:click = function(w){
-  alert(this.files[0].name)
-}
-</script>
-
-</footer>
-</html>
